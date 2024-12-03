@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: nasa-api-consumer
+  output:
+    ansi:
+      enabled: ALWAYS
+#data base
+  datasource:
+    url: jdbc:mysql://localhost:3306/nasa_integration_db
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+#Nasa integration
+nasa:
+  api:
+    base-url: https://api.nasa.gov
+    key: ${NASA_KEY}
+#Swagger and spring doc
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /index.html
