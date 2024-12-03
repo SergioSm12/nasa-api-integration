@@ -13,7 +13,7 @@ spring:
 #Nasa integration
 nasa:
   api:
-    base-url: https://api.nasa.gov
+    base-url: ${NASA_URL}
     key: ${NASA_KEY}
 #Swagger and spring doc
 springdoc:
