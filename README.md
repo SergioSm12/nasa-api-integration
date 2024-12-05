@@ -16,6 +16,8 @@ y el mantenimiento.
    1. [Integrations](#integrations)
    2. [spring-doc](#springdoc-swagger-ui)
 7. [Clases principales](#clases-principales)
+8. [Documentación end-points](#documentación-de-endpoints-con-swagger-page_facing_up)
+   1. [ver documentación](#acceso-a-la-documentación-end-points)
 ---
 
 ## Descripción del Proyecto
@@ -29,7 +31,9 @@ El enfoque modular del proyecto facilita agregar nuevos endpoints de la API
 de la NASA según las necesidades del usuario o las funcionalidades requerida.
 
 ## Características
-- **Consumo de múltiples endpoints de la NASA API**: Incluye servicios como *Astronomy Picture of the Day (APOD)*, *NeoWs (Near Earth Object Web Service)*, *Mars Rover Photos*, entre otros.
+- **Consumo de múltiples endpoints de la NASA API**: Incluye servicios
+como *Astronomy Picture of the Day (APOD)*, *NeoWs 
+(Near Earth Object Web Service)*, *Mars Rover Photos*.
 - **Almacenamiento en Base de Datos**: Se implementa un esquema de base de datos, preferiblemente MySQL, para almacenar toda la información necesaria.
 - **Autenticación JWT**: Seguridad para el acceso a los endpoints.
 - **Estructura modular**: Fácil incorporación de nuevos servicios y funcionalidades.
@@ -41,6 +45,7 @@ de la NASA según las necesidades del usuario o las funcionalidades requerida.
 src/
 ├── main/
 │   ├── java/com/sergio/nasa_api/app/
+│   │   ├── exception/
 │   │   ├── integrations/nasa/
 │   │   │   ├── controllers/
 │   │   │   ├── services/
@@ -84,7 +89,8 @@ y **${NASA_KEY}** estas las puede obtener en ([Clic para obtener](https://api.na
 ## Paquetes del proyecto
 
 ### Integrations
-
+- `com.sergio.nasa_api.app.integrations`: contiene las clases que se encargan de manejar
+las excepciones globales de nuestro proyecto. 
 - `com.sergio.nasa_api.app.integrations`: contiene las configuraciones y servicios
 generales para consumir nuestras integraciones, asi como paquetes en concreto
 que se encargan de centralizar la arquitectura de nuestra integración por ahora `nasa`;
@@ -128,5 +134,16 @@ astronómicos.
 
 ### `NasaServiceImpl` :
 Define operaciones que permiten la interacción con el repository.
+
+## Documentación de Endpoints con Swagger :page_facing_up:
+
+La documentación de los endpoints de la aplicación se realizó utilizando **Swagger**, una herramienta que facilita la creación, visualización y mantenimiento de documentación interactiva para APIs REST.
+
+La configuración global de Swagger se encuentra en el paquete:  
+`com.sergio.nasa_api.app.springdoc`.
+
+### Acceso a la documentación (End-Points)
+Una vez que la aplicación esté en ejecución, puede acceder a la documentación de los endpoints a través de la siguiente URL:  
+[Swagger Documentation](http://localhost:8080/swagger-ui/index.html#/ "Endpoints").
 
 

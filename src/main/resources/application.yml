@@ -4,7 +4,7 @@ spring:
   output:
     ansi:
       enabled: ALWAYS
-#data base
+  #data base
   datasource:
     url: jdbc:mysql://localhost:3306/nasa_integration_db
     username: root
