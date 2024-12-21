@@ -1,8 +1,9 @@
 package com.sergio.nasa_api.app.springdoc.integrations;
 
-import com.sergio.nasa_api.app.integrations.nasa.dtos.ApodResponse;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoRequest;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.apod.ApodResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.earth.EarthImageryRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -88,5 +89,42 @@ public interface NasaControllerDocs {
                     required = true
             )
             @Valid MarsRoverPhotoRequest request
+    );
+
+
+    @Operation(
+            summary = "Retrieve Earth imagery",
+            description = """
+        This endpoint retrieves satellite imagery of a specific location on Earth. 
+        You can specify the longitude, latitude, date, and dimensions to customize the result.
+        The response is a satellite image in JPEG format.
+        """
+    )
+    @ApiResponses(value = {
+            @ApiResponse(
+                    responseCode = "200",
+                    description = "Image retrieved successfully",
+                    content = @Content(
+                            mediaType = "image/jpeg"
+                    )
+            ),
+            @ApiResponse(
+                    responseCode = "400",
+                    description = "Invalid request. Ensure that the parameters are valid."
+            ),
+            @ApiResponse(
+                    responseCode = "500",
+                    description = "Internal server error."
+            )
+    })
+    ResponseEntity<byte[]> getEarthImagery(
+            @Parameter(
+                    description = """
+                    Contains filtering parameters for retrieving Earth imagery.
+                    Includes longitude, latitude, date, and optional dimension.
+                    """,
+                    required = true
+            )
+            @Valid EarthImageryRequest request
     );
 }

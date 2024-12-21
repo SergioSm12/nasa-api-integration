@@ -1,8 +1,9 @@
 package com.sergio.nasa_api.app.integrations.nasa.services.impl;
 
-import com.sergio.nasa_api.app.integrations.nasa.dtos.ApodResponse;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoRequest;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.apod.ApodResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.earth.EarthImageryRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoResponse;
 import com.sergio.nasa_api.app.integrations.nasa.repositories.NasaRepository;
 import com.sergio.nasa_api.app.integrations.nasa.services.NasaService;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,11 @@ public class NasaServiceImpl implements NasaService{
     @Override
     public List<MarsRoverPhotoResponse> getMarsRoverPhotos(MarsRoverPhotoRequest request) {
         return nasaRepository.getMarsRoverPhoto(request);
+    }
+
+    @Override
+    public byte[] getEarthImagery(EarthImageryRequest request) {
+        return nasaRepository.getEarthImagery(request);
     }
 
 }

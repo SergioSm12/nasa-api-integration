@@ -1,4 +1,4 @@
-package com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp;
+package com.sergio.nasa_api.app.integrations.nasa.dtos.mrp;
 
 public record CameraDto(
         Long id,

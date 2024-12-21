@@ -1,4 +1,4 @@
-package com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp;
+package com.sergio.nasa_api.app.integrations.nasa.dtos.mrp;
 
 import java.time.LocalDate;
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.sergio.nasa_api.app.integrations.nasa.dtos;
+package com.sergio.nasa_api.app.integrations.nasa.dtos.apod;
 
 
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -32,8 +32,8 @@ de la NASA según las necesidades del usuario o las funcionalidades requerida.
 
 ## Características
 - **Consumo de múltiples endpoints de la NASA API**: Incluye servicios
-como *Astronomy Picture of the Day (APOD)*, *NeoWs 
-(Near Earth Object Web Service)*, *Mars Rover Photos*.
+como *Astronomy Picture of the Day (APOD)*, *Earth 
+(Earth Imagery API)*, *Mars Rover Photos*.
 - **Almacenamiento en Base de Datos**: Se implementa un esquema de base de datos, preferiblemente MySQL, para almacenar toda la información necesaria.
 - **Autenticación JWT**: Seguridad para el acceso a los endpoints.
 - **Estructura modular**: Fácil incorporación de nuevos servicios y funcionalidades.
@@ -143,7 +143,7 @@ La configuración global de Swagger se encuentra en el paquete:
 `com.sergio.nasa_api.app.springdoc`.
 
 ### Acceso a la documentación (End-Points)
-Una vez que la aplicación esté en ejecución, puede acceder a la documentación de los endpoints a través de la siguiente URL:  
+Una vez que la aplicación esté en **ejecución**, puede acceder a la documentación de los endpoints a través de la siguiente URL:  
 [Swagger Documentation](http://localhost:8080/swagger-ui/index.html#/ "Endpoints").
 
 

@@ -1,4 +1,4 @@
-package com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp;
+package com.sergio.nasa_api.app.integrations.nasa.dtos.mrp;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Min;

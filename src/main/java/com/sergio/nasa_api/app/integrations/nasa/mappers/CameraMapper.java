@@ -1,7 +1,7 @@
 package com.sergio.nasa_api.app.integrations.nasa.mappers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.CameraDto;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.CameraDto;
 
 public class CameraMapper {
     public static CameraDto toDto(JsonNode cameraNode) {

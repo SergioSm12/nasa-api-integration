@@ -2,9 +2,10 @@ package com.sergio.nasa_api.app.integrations.nasa.repositories.impl;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.sergio.nasa_api.app.integrations.nasa.config.NasaApiConfig;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.ApodResponse;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoRequest;
-import com.sergio.nasa_api.app.integrations.nasa.dtos.Mrp.MarsRoverPhotoResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.apod.ApodResponse;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.earth.EarthImageryRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoRequest;
+import com.sergio.nasa_api.app.integrations.nasa.dtos.mrp.MarsRoverPhotoResponse;
 import com.sergio.nasa_api.app.integrations.nasa.mappers.MarsRoverPhotoMapper;
 import com.sergio.nasa_api.app.integrations.nasa.repositories.NasaRepository;
 import com.sergio.nasa_api.app.integrations.genericservices.HttpClientService;
@@ -22,6 +23,7 @@ public class NasaRepositoryImpl implements NasaRepository {
 
     private static final String APOD_ENDPOINT = "/planetary/apod";
     private static final String MRP_ENDPOINT = "/mars-photos/api/v1/rovers/{rover}/photos";
+    private static final String EARTH_IMAGERY = "/planetary/earth/imagery";
     private final HttpClientService httpClientService;
     private final NasaApiConfig nasaApiConfig;
 
@@ -41,6 +43,16 @@ public class NasaRepositoryImpl implements NasaRepository {
         String endPoint = MRP_ENDPOINT.replace("{rover}", request.rover());
         JsonNode response = httpClientService.doGet(endPoint, nasaQueryParams, JsonNode.class);
         return MarsRoverPhotoMapper.toDtoList(response);
+    }
+
+    @Override
+    public byte[] getEarthImagery(EarthImageryRequest request) {
+        Map<String, String> nasaQueryParams = nasaApiConfig.getAuthenticationQueryParams();
+        nasaQueryParams.put("lat", request.lat().toString());
+        nasaQueryParams.put("lon", request.lon().toString());
+        if (request.dim() != null) nasaQueryParams.put("dim", request.dim().toString());
+        if (StringUtils.hasText(request.date())) nasaQueryParams.put("date", request.date());
+        return httpClientService.doGet(EARTH_IMAGERY, nasaQueryParams, byte[].class);
     }
 
 
