@@ -45,6 +45,12 @@ como *Astronomy Picture of the Day (APOD)*, *Earth
 src/
 ├── main/
 │   ├── java/com/sergio/nasa_api/app/
+│   │   ├── auth/
+│   │   │   ├── config/
+│   │   │   ├── controller/
+│   │   │   ├── entity/
+│   │   │   ├── repository/
+│   │   │   ├── services/
 │   │   ├── exception/
 │   │   ├── integrations/nasa/
 │   │   │   ├── controllers/
@@ -80,13 +86,34 @@ nasa:
   api:
     base-url: ${NASA_URL}
     key: ${NASA_KEY}
+#JWT security
+application:
+   security:
+      jwt:
+         secret-key: ${SECRET_KEY}
+         expiration: 60
+         refresh-token:
+            expiration: 120
 ```
 1. Debes de configurar tu base de datos ingresando host:puerto ejemplo **localhost:3306** y también el nombre de tu base de datos **localhost:3306/tu_base_de_datos**.
 2. **La sección Nasa Integratión** debe ser configurada con las variables de entorno **${NASA_URL}** 
 y **${NASA_KEY}** estas las puede obtener en ([Clic para obtener](https://api.nasa.gov/ "nasa api"))
-3. **Nota**: La URL para **${NASA_URL}** a fecha de creación de este proyecto es: **https://api.nasa.gov** 
+3. **Nota**: La URL para **${NASA_URL}** a fecha de creación de este proyecto es: **https://api.nasa.gov**
+4. **Jwt Security** se debe de configurar nuestra clave secreta para la generación de tokens de seguridad **${SECRET_KEY}**,
+la duración de los tokens y el tiempo de expiración de los mismos. cabe mencionar que la clave secreta debe 
+estar encriptada y configurada en las variables de entorno.
 
 ## Paquetes del proyecto
+
+### Auth
+- `com.sergio.nasa_api.app.auth`: contiene las clases que se encargan de manejar la autenticación, registro y 
+refresco de tokens de seguridad.
+- `com.sergio.nasa_api.app.auth.config`: contiene las configuraciones de seguridad y filtros 
+de nuestra aplicación.
+- `com.sergio.nasa_api.app.auth.controller`: contiene los controladores encargados de nuestra autenticación.
+- `com.sergio.nasa_api.app.auth.entity`: contiene las entidades involucradas en el proceso de autenticación y seguridad.
+- `com.sergio.nasa_api.app.auth.repository`: contiene la capa de acceso a datos de nuestra autenticación.
+- `com.sergio.nasa_api.app.auth.services`: contiene la capa lógica de nuestra autenticación.
 
 ### Integrations
 - `com.sergio.nasa_api.app.integrations`: contiene las clases que se encargan de manejar
@@ -115,6 +142,18 @@ de nuestras integraciones.
 
 ## Clases principales
 A continuación se describe algunas de las clases principales de la aplicación.
+
+### `AuthController` :
+Contiene los endpoints para autenticación y registro de usuarios.
+
+### `JwtAuthenticationFilter` :
+Filtro que intercepta las peticiones HTTP y verifica la presencia de un token JWT válido.
+
+### `BeansInjectorConfig` :
+Clase que inyecta los beans de configuración para la autenticación de nuestra aplicación.
+
+### `SpringSecurityConfig` :  
+Clase que configura la seguridad de nuestra aplicación.
 
 ### `WebClientConfig` :
 Clase que inyecta el componente del cliente Http para consumir o integrar apis propias o externas 

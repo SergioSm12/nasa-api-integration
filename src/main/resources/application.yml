@@ -10,6 +10,14 @@ spring:
     username: root
     password: root
     driver-class-name: com.mysql.cj.jdbc.Driver
+  # Configuración JPA
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
 #Nasa integration
 nasa:
   api:
@@ -18,6 +26,14 @@ nasa:
 #Swagger and spring doc
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /v3/api-docs
   swagger-ui:
-    path: /index.html
+    path: /swagger-ui.html
+#JWT security
+application:
+  security:
+    jwt:
+      secret-key: ${SECRET_KEY}
+      expiration: 60
+      refresh-token:
+        expiration: 120
