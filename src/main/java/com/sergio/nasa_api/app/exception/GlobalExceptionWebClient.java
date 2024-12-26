@@ -3,6 +3,8 @@ package com.sergio.nasa_api.app.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.reactive.function.client.WebClientException;
@@ -14,16 +16,31 @@ public class GlobalExceptionWebClient {
 
     @ExceptionHandler(WebClientException.class)
     public ResponseEntity<ApiError> handlerGeneralException(
-            WebClientException exception,
+            WebClientException clientException,
+            Exception exception,
             HttpServletRequest request
     ) {
         return switch (exception) {
             case WebClientResponseException httpClientResponseException ->
-                    this.handleWebClientResponseException((WebClientResponseException) exception, request);
+                    this.handleWebClientResponseException((WebClientResponseException) clientException, request);
             case WebClientRequestException httpClientRequestException ->
-                    this.handleWebClientRequestException((WebClientRequestException) exception, request);
-            default -> this.handleWebGenericException(exception, request);
+                    this.handleWebClientRequestException((WebClientRequestException) clientException, request);
+            case AccessDeniedException accessDeniedException ->
+                    this.handleAccessDeniedException((AccessDeniedException) exception, request);
+            case AuthenticationCredentialsNotFoundException authenticationCredentialsNotFoundException ->
+                    this.handleAuthenticationCredentialsNotFoundException((AuthenticationCredentialsNotFoundException) exception, request);
+            default -> this.handleWebGenericException(clientException, request);
         };
+    }
+
+    private ResponseEntity<ApiError> handleAuthenticationCredentialsNotFoundException(AuthenticationCredentialsNotFoundException exception, HttpServletRequest request) {
+        ApiError dto = new ApiError("No tienes acceso a este recurso", exception.getMessage(), request.getMethod(), request.getRequestURL().toString());
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(dto);
+    }
+
+    private ResponseEntity<ApiError> handleAccessDeniedException(AccessDeniedException exception, HttpServletRequest request) {
+        ApiError dto = new ApiError("No tienes acceso a este recurso", exception.getMessage(), request.getMethod(), request.getRequestURL().toString());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(dto);
     }
 
     private ResponseEntity<ApiError> handleWebGenericException(WebClientException exception, HttpServletRequest request) {

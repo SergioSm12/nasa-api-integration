@@ -51,6 +51,8 @@ src/
 │   │   │   ├── entity/
 │   │   │   ├── repository/
 │   │   │   ├── services/
+│   │   ├── controllers/
+│   │   ├── entity/
 │   │   ├── exception/
 │   │   ├── integrations/nasa/
 │   │   │   ├── controllers/
@@ -60,12 +62,68 @@ src/
 │   │   │   ├── config/
 │   │   ├── integrations/genericconfig/
 │   │   ├── integrations/genericservices/
+│   │   ├── interceptors/
+│   │   ├── mappers/
+│   │   ├── repository/
+│   │   ├── services/
 │   │   ├── springdoc/
 │   │   │   ├── integrations/
 │   ├── resources/
 │       ├── application.yml
 └── test/
 ```
+## Diagrama entidad relación
+
+```mermaid
+erDiagram
+    user_interaction_log {
+        Long id
+        LocalDateTime timestamp
+        String url
+        String email
+        String http_method
+        String remote_address
+    }
+
+    roles {
+        Long id
+        Enum name
+    }
+
+    tokens {
+        Long id
+        Boolean expired
+        Boolean revoked
+        Long user_id
+        String(500) token
+        Enum token_type
+    }
+
+    users {
+        Long id
+        Boolean account_expired
+        Boolean account_locked
+        Boolean admin
+        Boolean credential_expired
+        Boolean enabled
+        String email
+        String name
+        String password
+    }
+
+    users_roles {
+        Long role_id
+        Long user_id
+    }
+
+   roles ||--o{ users_roles: roles_users
+   users ||--o{ users_roles: users_roles
+   users ||--o{ tokens: users_tokens
+
+```
+
+
+
 ## Requisitos Previos
 1. Java 17 o superior
 2. Maven 3.8.1 o superior
@@ -115,6 +173,22 @@ de nuestra aplicación.
 - `com.sergio.nasa_api.app.auth.repository`: contiene la capa de acceso a datos de nuestra autenticación.
 - `com.sergio.nasa_api.app.auth.services`: contiene la capa lógica de nuestra autenticación.
 
+### Controllers
+- `com.sergio.nasa_api.app.controllers`:
+Contiene los controladores generales de nuestra aplicación en nuestro caso
+contiene el controlador que nos permite ver las interacciones del usuario con 
+los endpoints de la nasa. 
+
+### Entity
+
+`com.sergio.nasa_api.app.entity`:
+Contiene las entidades y dtos generales de nuestra aplicación.
+
+### Exception
+
+`com.sergio.nasa_api.app.entity`: Contiene las exceptions de nuestra aplicación.
+
+
 ### Integrations
 - `com.sergio.nasa_api.app.integrations`: contiene las clases que se encargan de manejar
 las excepciones globales de nuestro proyecto. 
@@ -132,6 +206,24 @@ cuales a su vez contiene nuestros endpoints.
 - `com.sergio.nasa_api.app.integrations.nasa.dtos`: Contiene las clases DTO para respuestas.
 - `com.sergio.nasa_api.app.integrations.nasa.repositories`: Contiene la capa de acceso a datos de nuestra integración.
 - `com.sergio.nasa_api.app.integrations.nasa.services`: Contiene la capa lógica de nuestra integración.
+
+### Interceptors
+- `com.sergio.nasa_api.app.interceptors`: contiene los interceptores encargados de controlar las peticiones realizadas
+por el usuario.
+
+### Maper
+
+- `com.sergio.nasa_api.app.maper`: contiene las clases de mapeo de la respuesta denuesto repositorio 
+a nuestro dto de respuesta. 
+
+### Repository
+
+- `com.sergio.nasa_api.app.repository`: contiene nuestro repositorio para interactuar con nuestra entidad UserInteractionLog
+
+### Services
+
+- `com.sergio.nasa_api.app.services`: contiene nuestro servicio para interactuar con nuestro repositorio.
+
 
 ### SpringDoc (swagger-ui)
 
