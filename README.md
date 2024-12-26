@@ -1,5 +1,7 @@
 # NASA API Integration :ringed_planet: 
 
+### **For English documentation, please refer to** [README_en.md](README_en.md).
+
 Este proyecto es una aplicación **Spring Boot** diseñada
 para integrar y consumir múltiples endpoints de la API de la NASA,
 ofreciendo acceso a una variedad de datos astronómicos. Incluye autenticación
